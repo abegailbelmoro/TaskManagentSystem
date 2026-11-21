@@ -1,0 +1,172 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class TaskManagementSystem {
+
+    static Scanner input = new Scanner(System.in);
+    static ArrayList<String> tasks = new ArrayList<>();
+    static ArrayList<String> statuses = new ArrayList<>();
+
+    public static void main(String[] args) {
+
+        int choice;
+
+        do {
+            System.out.println("\n================================");
+            System.out.println("     TASK MANAGEMENT SYSTEM");
+            System.out.println("================================");
+            System.out.println("1. Add Task");
+            System.out.println("2. View Tasks");
+            System.out.println("3. Update Task");
+            System.out.println("4. Delete Task");
+            System.out.println("5. Complete Task");
+            System.out.println("6. Exit");
+            System.out.println("================================");
+            System.out.print("Enter your choice: ");
+
+            choice = input.nextInt();
+            input.nextLine();
+
+            switch (choice) {
+
+                case 1:
+                    addTask();
+                    break;
+
+                case 2:
+                    viewTasks();
+                    break;
+
+                case 3:
+                    updateTask();
+                    break;
+
+                case 4:
+                    deleteTask();
+                    break;
+
+                case 5:
+                    completeTask();
+                    break;
+
+                case 6:
+                    System.out.println("Thank you for using the system!");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice! Try again.");
+            }
+
+        } while (choice != 6);
+
+        input.close();
+    }
+
+    // ADD TASK
+    public static void addTask() {
+
+        System.out.println("\n--- ADD NEW TASK ---");
+
+        System.out.print("Enter task name: ");
+        String task = input.nextLine();
+
+        tasks.add(task);
+        statuses.add("Pending");
+
+        System.out.println("Task added successfully!");
+    }
+
+    // VIEW TASKS
+    public static void viewTasks() {
+
+        System.out.println("\n--- TASK LIST ---");
+
+        if (tasks.isEmpty()) {
+            System.out.println("No tasks available.");
+            return;
+        }
+
+        for (int i = 0; i < tasks.size(); i++) {
+
+            System.out.println((i + 1) + ". "
+                    + tasks.get(i)
+                    + " [" + statuses.get(i) + "]");
+        }
+    }
+
+    // UPDATE TASK
+    public static void updateTask() {
+
+        viewTasks();
+
+        if (tasks.isEmpty()) {
+            return;
+        }
+
+        System.out.print("\nEnter task number to update: ");
+        int number = input.nextInt();
+        input.nextLine();
+
+        if (number >= 1 && number <= tasks.size()) {
+
+            System.out.print("Enter new task name: ");
+            String newTask = input.nextLine();
+
+            tasks.set(number - 1, newTask);
+
+            System.out.println("Task updated successfully!");
+
+        } else {
+            System.out.println("Invalid task number!");
+        }
+    }
+
+    // DELETE TASK
+    public static void deleteTask() {
+
+        viewTasks();
+
+        if (tasks.isEmpty()) {
+            return;
+        }
+
+        System.out.print("\nEnter task number to delete: ");
+        int number = input.nextInt();
+        input.nextLine();
+
+        if (number >= 1 && number <= tasks.size()) {
+
+            tasks.remove(number - 1);
+            statuses.remove(number - 1);
+
+            System.out.println("Task deleted successfully!");
+
+        } else {
+            System.out.println("Invalid task number!");
+        }
+    }
+
+    // COMPLETE TASK
+    public static void completeTask() {
+
+        viewTasks();
+
+        if (tasks.isEmpty()) {
+            return;
+        }
+
+        System.out.print("\nEnter task number to complete: ");
+        int number = input.nextInt();
+        input.nextLine();
+
+        if (number >= 1 && number <= tasks.size()) {
+
+            statuses.set(number - 1, "Completed");
+
+            System.out.println("Task completed successfully!");
+
+        } else {
+            System.out.println("Invalid task number!");
+        }
+    }
+}
